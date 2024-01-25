@@ -1,0 +1,27 @@
+# Stage 1: Build Angular Frontend
+FROM node:16 AS angular-build
+WORKDIR /app
+COPY ["MyAngularApp/package.json", "MyAngularApp/package-lock.json*", "./"]
+RUN npm install
+COPY MyAngularApp/ .
+RUN npm run build
+
+# Stage 2: Build ASP.NET Core Application
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS dotnet-build
+WORKDIR /src
+COPY ["MyAspNetCoreApp/MyAspNetCoreApp.csproj", "MyAspNetCoreApp/"]
+RUN dotnet restore "MyAspNetCoreApp/MyAspNetCoreApp.csproj"
+COPY . .
+WORKDIR "/src/MyAspNetCoreApp"
+RUN dotnet build "MyAspNetCoreApp.csproj" -c Release -o /app/build
+
+# Publish the ASP.NET Core Application
+FROM dotnet-build AS publish
+RUN dotnet publish "MyAspNetCoreApp.csproj" -c Release -o /app/publish
+
+# Final Stage: Build the runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+COPY --from=angular-build /app/dist/MyAngularApp ./wwwroot
+ENTRYPOINT ["dotnet", "MyAspNetCoreApp.dll"]

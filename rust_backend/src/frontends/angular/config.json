@@ -1,0 +1,15 @@
+{
+    "base_image": "node:16",
+    "build_steps": [
+        "WORKDIR /app",
+        "COPY [\"{{ angular_app_dir }}/package.json\", \"{{ angular_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ angular_app_dir }}/ .",
+        "RUN npm run build"
+    ],
+    "output_directory": "/app/dist/{{ angular_output_dir }}",
+    "defaults": {
+        "angular_app_dir": "MyAngularApp",
+        "angular_output_dir": "MyAngularApp"
+    }
+}

@@ -1,0 +1,24 @@
+# Use an official base image as a parent image
+FROM centos:latest
+
+# Set environment variables for ColdFusion installation
+ENV CF_INSTALLER=coldfusion-2021-0-0-323925-linux-x64.bin
+ENV CF_INSTALLER_PATH=/tmp/${CF_INSTALLER}
+
+# Copy the ColdFusion installer to the container
+COPY ${CF_INSTALLER} ${CF_INSTALLER_PATH}
+
+# Install required dependencies
+RUN yum update -y \
+    && yum install -y java-1.8.0-openjdk wget unzip \
+    && chmod +x ${CF_INSTALLER_PATH}
+
+# Run the ColdFusion installer
+RUN ${CF_INSTALLER_PATH} -f /path/to/your/silent.properties
+
+# Expose the port ColdFusion runs on
+EXPOSE 8500
+
+# Set the default command to execute
+# when creating a new container
+CMD ["/opt/coldfusion/cfusion/bin/coldfusion", "start"]

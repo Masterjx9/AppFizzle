@@ -1,0 +1,32 @@
+# Stage 1: Build the application
+FROM haskell:8.10 as builder
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the .cabal file and install dependencies
+COPY *.cabal /app/
+RUN cabal update && cabal install --only-dependencies -j4
+
+# Copy the rest of the source code
+COPY . /app
+
+# Build the application
+RUN cabal build
+
+# Stage 2: Set up the runtime environment
+FROM ubuntu:20.04
+
+# Install runtime dependencies, if any
+RUN apt-get update && apt-get install -y \
+    libgmp-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the build artifact from the builder stage
+COPY --from=builder /app/dist-newstyle/build /app
+
+# Set the working directory
+WORKDIR /app
+
+# Set the default command to run the application
+CMD ["/app/build/x86_64-linux/ghc-8.10/your-project-name-0.1.0.0/x/your-executable-name/build/your-executable-name/your-executable-name"]

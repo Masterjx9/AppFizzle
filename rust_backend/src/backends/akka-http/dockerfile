@@ -1,0 +1,33 @@
+# Define the base image for the Scala and sbt environment
+FROM hseeberger/scala-sbt:latest as build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the build.sbt file and any other necessary sbt files for building the project
+COPY build.sbt ./
+COPY project ./project
+
+# Optionally, copy the source code
+COPY src ./src
+
+# Compile the application
+RUN sbt compile
+
+# Run the tests (optional, but recommended)
+RUN sbt test
+
+# Build the project into a 'fat' jar
+RUN sbt assembly
+
+# Define the second stage of the Docker build for running the application
+FROM openjdk:latest
+
+# Copy the 'fat' jar from the build stage to the run stage
+COPY --from=build /app/target/scala-*/app-assembly-*.jar /app/app.jar
+
+# Expose the port the application runs on
+EXPOSE 8080
+
+# Define the command to run the application
+CMD ["java", "-jar", "/app/app.jar"]

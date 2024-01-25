@@ -1,0 +1,14 @@
+# Use a Ruby base image
+FROM ruby:latest
+
+# Install Sinatra
+RUN gem install sinatra
+
+# Copy your Sinatra application into the container
+COPY . /app
+
+# Set the working directory
+WORKDIR /app
+
+# Define the command to run your application
+CMD ["ruby", "app.rb"]

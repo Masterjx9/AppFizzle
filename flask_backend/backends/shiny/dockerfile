@@ -1,0 +1,16 @@
+# Use an official R base image
+FROM rocker/shiny:latest
+
+# Install any necessary system dependencies here (if any)
+
+# Install required R packages
+RUN R -e "install.packages(c('shiny', 'other_packages'), repos='http://cran.rstudio.com/')"
+
+# Copy the Shiny app files into the container
+COPY /path/to/your/app /srv/shiny-server/myapp
+
+# Make the Shiny app available at port 3838
+EXPOSE 3838
+
+# Run the app
+CMD ["R", "-e", "shiny::runApp('/srv/shiny-server/myapp')"]

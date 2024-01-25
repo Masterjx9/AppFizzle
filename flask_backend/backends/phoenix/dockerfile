@@ -1,0 +1,44 @@
+# Use an Elixir image as the base
+FROM elixir:latest
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install Hex package manager
+RUN mix local.hex --force
+
+# Install Phoenix Mix archive
+RUN mix archive.install hex phx_new 1.5.7 --force
+
+# Install NodeJS and NPM for Phoenix assets
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install -y nodejs
+
+# Set the environment to run the app
+ENV MIX_ENV=prod
+
+# Copy all dependencies files
+COPY mix.exs mix.lock ./
+COPY config config
+
+# Fetch the application dependencies and build the application
+RUN mix deps.get
+RUN mix deps.compile
+
+# Copy all application files
+COPY priv priv
+COPY lib lib
+COPY assets assets
+
+# Compile and build assets
+RUN cd assets && npm install && npm run deploy
+RUN mix phx.digest
+
+# Compile the application
+RUN mix compile
+
+# Expose the port on which your app will run
+EXPOSE 4000
+
+# The command to run when the container starts
+CMD ["mix", "phx.server"]

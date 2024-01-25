@@ -1,0 +1,26 @@
+# Use an official lightweight Java runtime as a parent image
+FROM openjdk:8-jre-alpine
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy the built jar file from your Play application
+COPY target/universal/my-play-app-1.0-SNAPSHOT.zip /usr/src/app
+
+# Install Unzip
+RUN apk add --no-cache unzip
+
+# Unzip the application
+RUN unzip my-play-app-1.0-SNAPSHOT.zip && \
+    mv my-play-app-1.0-SNAPSHOT/* ./ && \
+    rm my-play-app-1.0-SNAPSHOT.zip && \
+    rm -r my-play-app-1.0-SNAPSHOT
+
+# Make the application script executable
+RUN chmod +x /usr/src/app/bin/my-play-app
+
+# Expose the port the app runs on
+EXPOSE 9000
+
+# Define the command to run the app
+CMD ["/usr/src/app/bin/my-play-app", "-Dplay.http.secret.key=abcdefghijk"]

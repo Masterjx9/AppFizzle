@@ -1,0 +1,17 @@
+# Use an Erlang base image
+FROM erlang:latest
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy your Erlang application source code to the container
+COPY . .
+
+# Compile the application
+RUN rebar3 compile
+
+# Expose the port your application runs on
+EXPOSE 8080
+
+# Define the command to run your application
+CMD ["rebar3", "shell"]

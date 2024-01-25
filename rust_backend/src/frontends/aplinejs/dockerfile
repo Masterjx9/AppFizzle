@@ -1,0 +1,21 @@
+# Step 1: Use a node base image
+FROM node:latest
+
+# Step 2: Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Step 3: Copy the package.json and package-lock.json (if available)
+# This is assuming you're using npm packages for your project
+COPY package*.json ./
+
+# Step 4: Install http-server globally to serve the application
+RUN npm install -g http-server
+
+# Step 5: Copy your AlpineJS application source code to the container
+COPY . .
+
+# Step 6: Expose the port the app runs on
+EXPOSE 8080
+
+# Step 7: Command to run the app
+CMD ["http-server", "-p 8080"]

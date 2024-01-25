@@ -1,0 +1,44 @@
+{
+    "requirements" : ["build_steps", "publish_steps", "final_steps"],
+    "base_image": "mcr.microsoft.com/dotnet/aspnet:{{ version }}",    
+    "sdk_image": "mcr.microsoft.com/dotnet/sdk:{{ version }}",
+    "build_steps": [
+      "FROM mcr.microsoft.com/dotnet/aspnet:{{ version }} AS dotnet-base",
+      "WORKDIR /app",
+      "EXPOSE {{#each defaults.expose_ports}}{{this}} {{/each}}",
+      "",
+      "FROM mcr.microsoft.com/dotnet/sdk:{{ version }} AS dotnet-build",
+      "WORKDIR /src",
+      "COPY [\"{{ project_name }}/{{ csproj_file }}\", \"{{ project_name }}/\"]",
+      "RUN dotnet restore \"{{ project_name }}/{{ csproj_file }}\"",
+      "COPY . .",
+      "WORKDIR \"/src/{{ project_name }}\"",
+      "RUN dotnet build \"{{ csproj_file }}\" -c Release -o /app/build",
+      ""
+    ],
+    "publish_steps": [
+      "FROM dotnet-build AS publish",
+      "RUN dotnet publish \"{{ csproj_file }}\" -c Release -o /app/publish",
+      ""
+    ],
+    "final_steps": [
+      "FROM dotnet-base AS final",
+      "WORKDIR /app",
+      "COPY --from=publish /app/publish .",
+      "{{#if frontend}}",
+      "COPY --from={{ frontend.build_stage }} {{ frontend.output_directory }} ./wwwroot",
+      "{{/if}}",
+      "ENTRYPOINT [\"dotnet\", \"{{ project_executable }}\"]"
+    ],
+    "defaults": {
+        "version": "6.0",
+        "project_name": "MyAspNetCoreApp",
+        "csproj_file": "MyAspNetCoreApp.csproj",
+        "project_executable": "MyAspNetCoreApp.dll",
+        "expose_ports": ["80", "443"]
+      },
+    "frontend": {
+        "build_stage": "angular-build",
+        "output_directory": "/app/dist/MyAngularApp"
+    }
+}

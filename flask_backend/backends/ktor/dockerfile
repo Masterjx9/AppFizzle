@@ -1,0 +1,11 @@
+# Use a base image with Java (JDK)
+FROM openjdk:11
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the build file (e.g., a fat JAR) into the image
+COPY ./build/libs/my-ktor-app.jar /app
+
+# Command to run the application
+CMD ["java", "-jar", "my-ktor-app.jar"]

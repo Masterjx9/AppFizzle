@@ -1,0 +1,20 @@
+# Use an official Perl runtime as a parent image
+FROM perl:latest
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy the current directory contents into the container at /usr/src/app
+COPY . .
+
+# Install any needed modules with cpanm
+RUN cpanm --installdeps .
+
+# Make port 3000 available to the world outside this container
+EXPOSE 3000
+
+# Define environment variable
+ENV AUTHOR_TESTING 0
+
+# Run app.pl when the container launches
+CMD ["perl", "bin/app.pl"]

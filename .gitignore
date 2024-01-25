@@ -1,0 +1,20 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Rust
+target/
+
+# Environment files
+.vscode/
+.venv
+.env
+.env.*
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Environment folders
+.envs/

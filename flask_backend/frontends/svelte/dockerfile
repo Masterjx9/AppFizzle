@@ -1,0 +1,23 @@
+# Step 1: Use the Node.js image
+FROM node:latest
+
+# Step 2: Set the working directory
+WORKDIR /app
+
+# Step 3: Copy package.json and package-lock.json (or yarn.lock)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Step 4: Copy the source code into the container
+COPY . .
+
+# Step 5: Build the Svelte app
+RUN npm run build
+
+# Step 6: Install 'serve' to serve the static files
+RUN npm install -g serve
+
+# Command to serve the app
+CMD ["serve", "-s", "build"]

@@ -1,0 +1,28 @@
+# Use an official Node runtime as a parent image
+FROM node:latest
+
+# Install Meteor
+RUN curl "https://install.meteor.com/" | sh
+
+# Set the working directory in the container
+WORKDIR /usr/src/app
+
+# Copy your Meteor application's source code into the container
+COPY . .
+
+# Install NPM dependencies and build the Meteor app
+# This will create a bundle in the /usr/src/app/bundle directory
+RUN meteor npm install
+RUN meteor build --directory .
+
+# Set the working directory to the built app
+WORKDIR /usr/src/app/bundle
+
+# Install production NPM dependencies
+RUN (cd programs/server && npm install)
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Define the command to run your app using CMD which defines your runtime
+CMD ["node", "main.js"]
