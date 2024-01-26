@@ -26,7 +26,7 @@
       "WORKDIR /app",
       "COPY --from=publish /app/publish .",
       "{{#if frontend}}",
-      "COPY --from={{ frontend.build_stage }} {{ frontend.output_directory }} ./wwwroot",
+      "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} ./wwwroot",
       "{{/if}}",
       "ENTRYPOINT [\"dotnet\", \"{{ project_executable }}\"]"
     ],
@@ -36,9 +36,5 @@
         "csproj_file": "MyAspNetCoreApp.csproj",
         "project_executable": "MyAspNetCoreApp.dll",
         "expose_ports": ["80", "443"]
-      },
-    "frontend": {
-        "build_stage": "angular-build",
-        "output_directory": "/app/dist/MyAngularApp"
-    }
+      }
 }

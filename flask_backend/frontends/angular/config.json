@@ -10,8 +10,10 @@
         "RUN npm run build"
     ],
     "output_directory": "/app/dist/{{ angular_output_dir }}",
+    "build_stage_name": "angular-build",
     "defaults": {
         "angular_app_dir": "MyAngularApp",
-        "angular_output_dir": "MyAngularApp"
+        "angular_output_dir": "MyAngularApp",
+        "version": "16"
     }
 }

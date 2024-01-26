@@ -36,38 +36,55 @@ for requirement in frontend_requirements:
 # print(frontend_dockerfile)
 
 
-def replace_template_variables(dockerfile, defaults, frontend_dockerfile=None, user_values=None):
-    # Process #each directives first
+def replace_template_variables(backend_dockerfile, defaults, frontend_dockerfile=None, frontend_data=None, user_values=None):
+    # Function to replace template variables with provided values
+    def replace_variables(dockerfile, data_source):
+        variable_pattern = r"\{\{ (.*?) \}\}"
+        variable_matches = re.findall(variable_pattern, dockerfile)
+        for variable in variable_matches:
+            value = data_source.get(variable, '')
+            dockerfile = re.sub(r"\{\{\s*" + variable + r"\s*\}\}", value, dockerfile)
+        return dockerfile
+
+    # Handle #each directives in frontend_dockerfile
+    if frontend_dockerfile:
+        frontend_dockerfile = process_each_directive(frontend_dockerfile, frontend_data["defaults"])
+        frontend_dockerfile = replace_variables(frontend_dockerfile, frontend_data["defaults"])
+    
+    # Concatenate frontend and backend Dockerfiles
+    dockerfile_combined = frontend_dockerfile + backend_dockerfile if frontend_dockerfile else backend_dockerfile
+
+    # Process #each directives in the combined Dockerfile
+    dockerfile_combined = process_each_directive(dockerfile_combined, defaults)
+
+    # Process #if directives
+    if_pattern = r"\{\{\#if (.*?)\}\}(.*?)\{\{\/if\}\}"
+    if_matches = re.finditer(if_pattern, dockerfile_combined, re.DOTALL)
+    for match in if_matches:
+        condition, content = match.groups()
+        if condition == "frontend" and frontend_data:
+            content = replace_variables(content, frontend_data.get('defaults', {}))
+            dockerfile_combined = dockerfile_combined.replace(match.group(0), content)
+        else:
+            dockerfile_combined = dockerfile_combined.replace(match.group(0), '')
+
+    # Replace remaining variables in the combined Dockerfile
+    dockerfile_combined = replace_variables(dockerfile_combined, user_values if user_values else defaults)
+
+    return dockerfile_combined
+
+def process_each_directive(dockerfile, data_source):
     each_pattern = r"\{\{\#each (.*?)\}\}(.*?)\{\{\/each\}\}"
     each_matches = re.finditer(each_pattern, dockerfile, re.DOTALL)
     for match in each_matches:
         list_variable, content = match.groups()
-        items = defaults.get(list_variable.split('.')[1], [])  # assuming format like defaults.list_name
+        items = data_source.get(list_variable.split('.')[1], [])
         replacement = ''.join([re.sub(r"\{\{this\}\}", item, content) for item in items])
         dockerfile = dockerfile.replace(match.group(0), replacement)
-
-    # Process #if directives
-    if_pattern = r"\{\{\#if (.*?)\}\}(.*?)\{\{\/if\}\}"
-    if_matches = re.finditer(if_pattern, dockerfile, re.DOTALL)
-    for match in if_matches:
-        condition, content = match.groups()
-        include_content = False
-        if condition == "frontend" and frontend_dockerfile is not None:
-            include_content = True
-        dockerfile = dockerfile.replace(match.group(0), content if include_content else "")
-        
-    # Process template variables
-    variable_pattern = r"\{\{ (.*?) \}\}"
-    variable_matches = re.findall(variable_pattern, dockerfile)
-    for variable in variable_matches:
-        value = user_values.get(variable, defaults.get(variable, '')) if user_values is not None else defaults.get(variable, '')
-        dockerfile = re.sub(r"\{\{\s*" + variable + r"\s*\}\}", value, dockerfile)
-
     return dockerfile
 
 # Example Usage
 user_values = {"version": "3.1", "project_name": "MyApp"}  # Example user provided values
-defaults = {"version": "6.0", "project_name": "DefaultProject"}  # Example default values
 
-processed_dockerfile = replace_template_variables(backend_dockerfile, backend_data_test["defaults"], frontend_dockerfile)
+processed_dockerfile = replace_template_variables(backend_dockerfile, backend_data_test["defaults"], frontend_dockerfile, frontend_data_test)
 print(processed_dockerfile)
