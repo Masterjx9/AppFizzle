@@ -1,0 +1,19 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "node:latest",
+    "build_steps": [
+        "FROM node:{{ version }} AS backbonejs-build",
+        "WORKDIR /usr/src/app",
+        "COPY [\"{{ backbonejs_app_dir }}/package.json\", \"{{ backbonejs_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ backbonejs_app_dir }}/ .",
+        "RUN npm run build"
+    ],
+    "output_directory": "/usr/src/app/dist/{{ backbonejs_output_dir }}",
+    "build_stage_name": "backbonejs-build",
+    "defaults": {
+        "backbonejs_app_dir": "MyBackboneJSApp",
+        "backbonejs_output_dir": "MyBackboneJSApp",
+        "version": "latest"
+    }
+}

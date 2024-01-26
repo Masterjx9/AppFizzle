@@ -1,0 +1,19 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "mcr.microsoft.com/dotnet/sdk:{{ version }}",
+    "build_steps": [
+        "FROM mcr.microsoft.com/dotnet/sdk:{{ version }} AS blazor-build",
+        "WORKDIR /app",
+        "COPY [\"{{ blazor_app_dir }}/*.csproj\", \"./\"]",
+        "RUN dotnet restore",
+        "COPY {{ blazor_app_dir }}/ .",
+        "RUN dotnet publish -c Release -o out/wwwroot"
+    ],
+    "output_directory": "/app/{{ MyBlazorApp }}",
+    "build_stage_name": "blazor-build",
+    "defaults": {
+        "blazor_app_dir": "MyBlazorApp",
+        "blazor_output_dir": "MyBlazorApp",
+        "version": "latest"
+    }
+}

@@ -1,5 +1,4 @@
 import os
-import json
 import re
 
 def get_config(folder_name, directory_path):
@@ -25,6 +24,7 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
     if_pattern = r"\{\{\#if (.*?)\}\}(.*?)\{\{\/if\}\}"
     variable_pattern = r"\{\{ (.*?) \}\}"
     
+    # Process frontend Dockerfile if provided
     if frontend_dockerfile is not None:
         ft_each_matches = re.finditer(each_pattern, frontend_dockerfile, re.DOTALL)
         for match in ft_each_matches:
@@ -37,9 +37,10 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
         for variable in ft_variable_matches:
             value = user_values.get(variable, frontend_data["defaults"].get(variable, '')) if user_values is not None else frontend_data["defaults"].get(variable, '')
             frontend_dockerfile = re.sub(r"\{\{\s*" + variable + r"\s*\}\}", value, frontend_dockerfile)
+        
+        backend_dockerfile = frontend_dockerfile + backend_dockerfile
     
-    backend_dockerfile = frontend_dockerfile + backend_dockerfile
-    
+    # Process backend Dockerfile
     bk_each_matches = re.finditer(each_pattern, backend_dockerfile, re.DOTALL)
     for match in bk_each_matches:
         list_variable, content = match.groups()
@@ -50,9 +51,7 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
     if_matches = re.finditer(if_pattern, backend_dockerfile, re.DOTALL)
     for match in if_matches:
         condition, content = match.groups()
-        include_content = False
         if condition == "frontend" and frontend_data is not None:
-            include_content = True
             while re.search(variable_pattern, content):
                 for variable in re.findall(variable_pattern, content):
                     if 'frontend.' in variable:
@@ -61,7 +60,10 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
                     else:
                         value = frontend_data["defaults"].get(variable, '') if user_values is None else user_values.get(variable, frontend_data["defaults"].get(variable, ''))
                     content = re.sub(r"\{\{\s*" + variable + r"\s*\}\}", value, content)
-            backend_dockerfile = backend_dockerfile.replace(match.group(0), content if include_content else "")
+            backend_dockerfile = backend_dockerfile.replace(match.group(0), content)
+        else:
+            # Remove the if block entirely if no frontend data is provided
+            backend_dockerfile = backend_dockerfile.replace(match.group(0), '')
 
     bk_variable_matches = re.findall(variable_pattern, backend_dockerfile)
     for variable in bk_variable_matches:
@@ -69,12 +71,3 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
         backend_dockerfile = re.sub(r"\{\{\s*" + variable + r"\s*\}\}", value, backend_dockerfile)
 
     return backend_dockerfile
-
-# backend_data_test = json.loads(get_config("asp_net_core", "backends"))
-# backend_dockerfile = build_dockerfile(backend_data_test)
-
-# frontend_data_test = json.loads(get_config("angular", "frontends"))
-# frontend_dockerfile = build_dockerfile(frontend_data_test)
-
-# processed_dockerfile = replace_template_variables(backend_dockerfile, backend_data_test["defaults"], frontend_dockerfile, frontend_data_test)
-# print(processed_dockerfile)

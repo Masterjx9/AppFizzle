@@ -1,0 +1,19 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "node:latest",
+    "build_steps": [
+        "FROM node:{{ version }} AS vuejs-build",
+        "WORKDIR /app",
+        "COPY [\"{{ vuejs_app_dir }}/package.json\", \"{{ vuejs_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ vuejs_app_dir }}/ .",
+        "RUN npm run build"
+    ],
+    "output_directory": "/app/dist/{{ vuejs_output_dir }}",
+    "build_stage_name": "vuejs-build",
+    "defaults": {
+        "vuejs_app_dir": "MyVueApp",
+        "vuejs_output_dir": "MyVueApp",
+        "version": "latest"
+    }
+}

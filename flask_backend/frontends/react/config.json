@@ -1,0 +1,19 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "node:latest",
+    "build_steps": [
+        "FROM node:{{ version }} AS react-build",
+        "WORKDIR /app",
+        "COPY [\"{{ react_app_dir }}/package.json\", \"{{ react_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ react_app_dir }}/ .",
+        "RUN npm run build"
+    ],
+    "output_directory": "/app/build/{{ react_output_dir }}",
+    "build_stage_name": "react-build",
+    "defaults": {
+        "react_app_dir": "MyReactApp",
+        "react_output_dir": "MyReactApp",
+        "version": "latest"
+    }
+}

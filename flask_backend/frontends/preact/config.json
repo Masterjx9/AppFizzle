@@ -1,0 +1,19 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "node:latest",
+    "build_steps": [
+        "FROM node:{{ version }} AS preact-build",
+        "WORKDIR /app",
+        "COPY [\"{{ preact_app_dir }}/package.json\", \"{{ preact_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ preact_app_dir }}/ .",
+        "RUN npm run build"
+    ],
+    "output_directory": "/app/build/{{ preact_output_dir }}",
+    "build_stage_name": "preact-build",
+    "defaults": {
+        "preact_app_dir": "MyPreactApp",
+        "preact_output_dir": "MyPreactApp",
+        "version": "latest"
+    }
+}

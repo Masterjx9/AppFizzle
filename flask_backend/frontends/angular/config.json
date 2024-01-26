@@ -1,6 +1,6 @@
 {
     "requirements": ["build_steps"],
-    "base_image": "node:16",
+    "base_image": "node:latest",
     "build_steps": [
         "FROM node:{{ version }} AS angular-build",
         "WORKDIR /app",
@@ -14,6 +14,6 @@
     "defaults": {
         "angular_app_dir": "MyAngularApp",
         "angular_output_dir": "MyAngularApp",
-        "version": "16"
+        "version": "latest"
     }
 }
