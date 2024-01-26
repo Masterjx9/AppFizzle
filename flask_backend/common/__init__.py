@@ -70,11 +70,11 @@ def replace_template_variables(backend_dockerfile, backend_defaults, frontend_do
 
     return backend_dockerfile
 
-backend_data_test = json.loads(get_config("asp_net_core", "backends"))
-backend_dockerfile = build_dockerfile(backend_data_test)
+# backend_data_test = json.loads(get_config("asp_net_core", "backends"))
+# backend_dockerfile = build_dockerfile(backend_data_test)
 
-frontend_data_test = json.loads(get_config("angular", "frontends"))
-frontend_dockerfile = build_dockerfile(frontend_data_test)
+# frontend_data_test = json.loads(get_config("angular", "frontends"))
+# frontend_dockerfile = build_dockerfile(frontend_data_test)
 
-processed_dockerfile = replace_template_variables(backend_dockerfile, backend_data_test["defaults"], frontend_dockerfile, frontend_data_test)
-print(processed_dockerfile)
+# processed_dockerfile = replace_template_variables(backend_dockerfile, backend_data_test["defaults"], frontend_dockerfile, frontend_data_test)
+# print(processed_dockerfile)
