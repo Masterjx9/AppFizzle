@@ -5,7 +5,7 @@
 
 ## Ruby
 - Ruby on Rails
-/home/tech/apps/appcomposer/appfizzle- Sinatra
+Sinatra
 
 ## Python
 - Flask
