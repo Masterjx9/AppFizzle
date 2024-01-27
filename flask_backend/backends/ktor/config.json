@@ -1,0 +1,18 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "openjdk:{{ version }}",
+    "final_steps": [
+        "FROM openjdk:{{ version }}",
+        "WORKDIR /app",
+        "COPY ./build/libs/my-ktor-app.jar /app",
+        "EXPOSE 8080",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/public",
+        "{{/if}}",
+        "CMD [\"java\", \"-jar\", \"my-ktor-app.jar\"]"
+    ],
+    "defaults": {
+        "version": "11",
+        "expose_ports": ["8080"]
+    }
+}

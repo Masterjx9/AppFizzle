@@ -1,0 +1,26 @@
+{
+    "requirements": ["build_steps", "final_steps"],
+    "base_image": "golang:{{ version }}",
+    "build_steps": [
+        "FROM golang:{{ version }} AS builder",
+        "WORKDIR /app",
+        "COPY go.mod go.sum ./",
+        "RUN go mod download",
+        "COPY . .",
+        "RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ."
+    ],
+    "final_steps": [
+        "FROM alpine:latest",
+        "WORKDIR /root/",
+        "COPY --from=builder /app/main .",
+        "EXPOSE 8080",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /root/public",
+        "{{/if}}",
+        "CMD [\"./main\"]"
+    ],
+    "defaults": {
+        "version": "1.18",
+        "expose_ports": ["8080"]
+    }
+}

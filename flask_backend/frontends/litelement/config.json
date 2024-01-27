@@ -1,0 +1,20 @@
+{
+    "requirements": ["build_steps"],
+    "base_image": "node:{{ version }}",
+    "build_steps": [
+        "FROM node:{{ version }} AS lit-build",
+        "WORKDIR /app",
+        "COPY [\"{{ lit_app_dir }}/package.json\", \"{{ lit_app_dir }}/package-lock.json*\", \"./\"]",
+        "RUN npm install",
+        "COPY {{ lit_app_dir }}/ .",
+        "RUN npm run build",
+        ""
+    ],
+    "output_directory": "/app/dist/{{ lit_output_dir }}",
+    "build_stage_name": "lit-build",
+    "defaults": {
+        "lit_app_dir": "MyLitApp",
+        "lit_output_dir": "MyLitApp",
+        "version": "latest"
+    }
+}

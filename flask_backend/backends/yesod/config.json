@@ -1,0 +1,28 @@
+{
+    "requirements": ["build_steps", "final_steps"],
+    "base_image": "haskell:{{ version }}",
+    "build_steps": [
+        "FROM haskell:{{ version }} as builder",
+        "WORKDIR /app",
+        "COPY *.cabal /app/",
+        "RUN cabal update && cabal install --only-dependencies -j4",
+        "COPY . /app",
+        "RUN cabal build"
+    ],
+    "final_steps": [
+        "FROM ubuntu:20.04",
+        "RUN apt-get update && apt-get install -y libgmp-dev && rm -rf /var/lib/apt/lists/*",
+        "COPY --from=builder /app/dist-newstyle/build /app",
+        "WORKDIR /app",
+        "EXPOSE 8080",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www",
+        "{{/if}}",
+        "CMD [\"/app/build/x86_64-linux/ghc-{{ haskell_version }}/your-project-name-0.1.0.0/x/your-executable-name/build/your-executable-name/your-executable-name\"]"
+    ],
+    "defaults": {
+        "version": "8.10",
+        "haskell_version": "8.10",
+        "expose_ports": ["8080"]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "ruby:{{ version }}",
+    "final_steps": [
+        "FROM ruby:{{ version }}",
+        "RUN gem install sinatra",
+        "WORKDIR /app",
+        "COPY . /app",
+        "EXPOSE 4567",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/public",
+        "{{/if}}",
+        "CMD [\"ruby\", \"app.rb\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["4567"]
+    }
+}

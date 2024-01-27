@@ -1,0 +1,22 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "python:{{ version }}",
+    "final_steps": [
+        "FROM python:{{ version }}",
+        "ENV PYTHONDONTWRITEBYTECODE 1",
+        "ENV PYTHONUNBUFFERED 1",
+        "WORKDIR /usr/src/app",
+        "RUN apt-get update && apt-get -y install netcat gcc && apt-get clean",
+        "COPY . .",
+        "RUN pip install --no-cache-dir -r requirements.txt",
+        "EXPOSE 8000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "CMD [\"python\", \"manage.py\", \"runserver\", \"0.0.0.0:8000\"]"
+    ],
+    "defaults": {
+        "version": "3.8",
+        "expose_ports": ["8000"]
+    }
+}

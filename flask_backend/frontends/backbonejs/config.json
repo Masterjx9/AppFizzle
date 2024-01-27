@@ -7,7 +7,8 @@
         "COPY [\"{{ backbonejs_app_dir }}/package.json\", \"{{ backbonejs_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ backbonejs_app_dir }}/ .",
-        "RUN npm run build"
+        "RUN npm run build",
+        ""
     ],
     "output_directory": "/usr/src/app/dist/{{ backbonejs_output_dir }}",
     "build_stage_name": "backbonejs-build",

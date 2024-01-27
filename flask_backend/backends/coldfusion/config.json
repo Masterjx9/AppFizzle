@@ -1,0 +1,21 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "centos:latest",
+    "final_steps": [
+        "FROM centos:latest",
+        "ENV CF_INSTALLER=coldfusion-2021-0-0-323925-linux-x64.bin",
+        "ENV CF_INSTALLER_PATH=/tmp/${CF_INSTALLER}",
+        "COPY ${CF_INSTALLER} ${CF_INSTALLER_PATH}",
+        "RUN yum update -y && yum install -y java-1.8.0-openjdk wget unzip && chmod +x ${CF_INSTALLER_PATH}",
+        "RUN ${CF_INSTALLER_PATH} -f /path/to/your/silent.properties",
+        "EXPOSE 8500",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www/html",
+        "{{/if}}",
+        "CMD [\"/opt/coldfusion/cfusion/bin/coldfusion\", \"start\"]"
+    ],
+    "defaults": {
+        "cf_version": "2021",
+        "expose_ports": ["8500"]
+    }
+}

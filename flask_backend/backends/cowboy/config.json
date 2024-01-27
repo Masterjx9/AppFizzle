@@ -1,0 +1,19 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "erlang:{{ version }}",
+    "final_steps": [
+        "FROM erlang:{{ version }}",
+        "WORKDIR /usr/src/app",
+        "COPY . .",
+        "RUN rebar3 compile",
+        "EXPOSE 8080",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "CMD [\"rebar3\", \"shell\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["8080"]
+    }
+}

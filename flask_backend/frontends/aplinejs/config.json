@@ -7,7 +7,8 @@
         "COPY [\"{{ aplinejs_app_dir }}/package.json\", \"{{ aplinejs_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ aplinejs_app_dir }}/ .",
-        "RUN npm run build"
+        "RUN npm run build",
+        ""
     ],
     "output_directory": "/usr/src/app/dist/{{ aplinejs_output_dir }}",
     "build_stage_name": "aplinejs-build",

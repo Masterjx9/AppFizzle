@@ -7,7 +7,8 @@
         "COPY [\"{{ svelte_app_dir }}/package.json\", \"{{ svelte_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ svelte_app_dir }}/ .",
-        "RUN npm run build"
+        "RUN npm run build",
+        ""
     ],
     "output_directory": "/app/public/{{ svelte_output_dir }}",
     "build_stage_name": "svelte-build",

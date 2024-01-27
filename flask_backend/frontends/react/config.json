@@ -7,7 +7,8 @@
         "COPY [\"{{ react_app_dir }}/package.json\", \"{{ react_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ react_app_dir }}/ .",
-        "RUN npm run build"
+        "RUN npm run build",
+        ""
     ],
     "output_directory": "/app/build/{{ react_output_dir }}",
     "build_stage_name": "react-build",

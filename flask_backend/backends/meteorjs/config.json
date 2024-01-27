@@ -1,0 +1,23 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "node:{{ version }}",
+    "final_steps": [
+        "FROM node:{{ version }}",
+        "RUN curl \"https://install.meteor.com/\" | sh",
+        "WORKDIR /usr/src/app",
+        "COPY . .",
+        "RUN meteor npm install",
+        "RUN meteor build --directory .",
+        "WORKDIR /usr/src/app/bundle",
+        "RUN (cd programs/server && npm install)",
+        "EXPOSE 3000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "CMD [\"node\", \"main.js\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["3000"]
+    }
+}

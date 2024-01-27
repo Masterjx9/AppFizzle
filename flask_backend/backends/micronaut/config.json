@@ -1,0 +1,24 @@
+{
+    "requirements": ["build_steps", "final_steps"],
+    "base_image": "gradle:{{ version }}-jdk11",
+    "build_steps": [
+        "FROM gradle:{{ version }}-jdk11 AS build",
+        "WORKDIR /app",
+        "COPY build.gradle /app/",
+        "COPY src /app/src",
+        "RUN gradle clean build --no-daemon"
+    ],
+    "final_steps": [
+        "FROM openjdk:11-jre-slim",
+        "EXPOSE 8080",
+        "COPY --from=build /app/build/libs/*-all.jar /app/app.jar",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www",
+        "{{/if}}",
+        "CMD [\"java\", \"-jar\", \"/app/app.jar\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["8080"]
+    }
+}

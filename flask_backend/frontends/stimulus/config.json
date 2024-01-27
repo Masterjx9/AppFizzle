@@ -6,7 +6,8 @@
         "WORKDIR /usr/src/app",
         "COPY [\"{{ stimulus_app_dir }}/package.json\", \"{{ stimulus_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
-        "COPY {{ stimulus_app_dir }}/ ."
+        "COPY {{ stimulus_app_dir }}/ .",
+        ""
     ],
     "output_directory": "/usr/src/app/{{ aplinejs_output_dir }}",
     "build_stage_name": "stimulus-build",

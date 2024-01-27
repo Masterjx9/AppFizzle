@@ -1,0 +1,20 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "node:{{ version }}",
+    "final_steps": [
+        "FROM node:{{ version }}",
+        "WORKDIR /usr/src/app",
+        "COPY package*.json ./",
+        "RUN npm install",
+        "COPY . .",
+        "EXPOSE 3000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "CMD [\"node\", \"app.js\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["3000"]
+    }
+}

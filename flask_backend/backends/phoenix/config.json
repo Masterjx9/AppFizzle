@@ -1,0 +1,32 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "elixir:{{ version }}",
+    "final_steps": [
+        "FROM elixir:{{ version }}",
+        "WORKDIR /app",
+        "RUN mix local.hex --force",
+        "RUN mix archive.install hex phx_new 1.5.7 --force",
+        "RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -",
+        "RUN apt-get install -y nodejs",
+        "ENV MIX_ENV=prod",
+        "COPY mix.exs mix.lock ./",
+        "COPY config config",
+        "RUN mix deps.get",
+        "RUN mix deps.compile",
+        "COPY priv priv",
+        "COPY lib lib",
+        "COPY assets assets",
+        "RUN cd assets && npm install && npm run deploy",
+        "RUN mix phx.digest",
+        "RUN mix compile",
+        "EXPOSE 4000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/public",
+        "{{/if}}",
+        "CMD [\"mix\", \"phx.server\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["4000"]
+    }
+}

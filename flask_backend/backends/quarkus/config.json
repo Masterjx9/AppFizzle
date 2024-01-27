@@ -1,0 +1,24 @@
+{
+    "requirements": ["build_steps", "final_steps"],
+    "base_image": "maven:{{ version }}-openjdk-11",
+    "build_steps": [
+        "FROM maven:{{ version }}-openjdk-11 AS build",
+        "WORKDIR /app",
+        "COPY src ./src",
+        "COPY pom.xml ./",
+        "RUN mvn clean package -DskipTests"
+    ],
+    "final_steps": [
+        "FROM openjdk:11-jre-slim",
+        "COPY --from=build /app/target/*-runner.jar /app/app.jar",
+        "EXPOSE 8080",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www",
+        "{{/if}}",
+        "CMD [\"java\", \"-jar\", \"/app/app.jar\"]"
+    ],
+    "defaults": {
+        "version": "3.6.3",
+        "expose_ports": ["8080"]
+    }
+}

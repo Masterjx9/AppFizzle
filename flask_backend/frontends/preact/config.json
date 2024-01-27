@@ -7,7 +7,8 @@
         "COPY [\"{{ preact_app_dir }}/package.json\", \"{{ preact_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ preact_app_dir }}/ .",
-        "RUN npm run build"
+        "RUN npm run build",
+        ""
     ],
     "output_directory": "/app/build/{{ preact_output_dir }}",
     "build_stage_name": "preact-build",

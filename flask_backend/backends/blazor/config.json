@@ -1,0 +1,25 @@
+{
+    "requirements" : ["build_steps", "final_steps"],
+    "base_image": "mcr.microsoft.com/dotnet/sdk:{{ version }}",
+    "build_steps": [
+        "FROM mcr.microsoft.com/dotnet/sdk:{{ version }} AS blazor-build",
+        "WORKDIR /app",
+        "COPY [\"*.csproj\", \"./\"]",
+        "RUN dotnet restore",
+        "COPY . ./",
+        "RUN dotnet publish -c Release -o out"
+    ],
+    "final_steps": [
+        "FROM mcr.microsoft.com/dotnet/aspnet:{{ version }}",
+        "WORKDIR /app",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/wwwroot",
+        "{{/if}}",
+        "COPY --from=blazor-build /app/out .",
+        "ENTRYPOINT [\"dotnet\", \"{{ project_executable }}\"]"
+    ],
+    "defaults": {
+        "version": "5.0",
+        "project_executable": "MyBlazorApp.dll"
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "openjdk:{{ version }}-jre-alpine",
+    "final_steps": [
+        "FROM openjdk:{{ version }}-jre-alpine",
+        "WORKDIR /usr/src/app",
+        "COPY target/universal/my-play-app-1.0-SNAPSHOT.zip /usr/src/app",
+        "RUN apk add --no-cache unzip",
+        "RUN unzip my-play-app-1.0-SNAPSHOT.zip && mv my-play-app-1.0-SNAPSHOT/* ./ && rm my-play-app-1.0-SNAPSHOT.zip && rm -r my-play-app-1.0-SNAPSHOT",
+        "RUN chmod +x /usr/src/app/bin/my-play-app",
+        "EXPOSE 9000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "CMD [\"/usr/src/app/bin/my-play-app\", \"-Dplay.http.secret.key=abcdefghijk\"]"
+    ],
+    "defaults": {
+        "version": "8",
+        "expose_ports": ["9000"]
+    }
+}

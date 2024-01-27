@@ -1,0 +1,19 @@
+{
+    "requirements" : ["final_steps"],
+    "base_image": "php:{{ version }}",
+    "final_steps": [
+        "FROM php:{{ version }}",
+        "WORKDIR /var/www/html",
+        "COPY . /var/www/html",
+        "RUN docker-php-ext-install mysqli pdo pdo_mysql",
+        "EXPOSE 80",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www/html",
+        "{{/if}}",
+        "CMD [\"apache2-foreground\"]"
+    ],
+    "defaults": {
+        "version": "7.4-apache",
+        "expose_ports": ["80"]
+    }
+}

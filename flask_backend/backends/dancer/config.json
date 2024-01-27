@@ -1,0 +1,20 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "perl:{{ version }}",
+    "final_steps": [
+        "FROM perl:{{ version }}",
+        "WORKDIR /usr/src/app",
+        "COPY . .",
+        "RUN cpanm --installdeps .",
+        "EXPOSE 3000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /usr/src/app/public",
+        "{{/if}}",
+        "ENV AUTHOR_TESTING 0",
+        "CMD [\"perl\", \"bin/app.pl\"]"
+    ],
+    "defaults": {
+        "version": "latest",
+        "expose_ports": ["3000"]
+    }
+}

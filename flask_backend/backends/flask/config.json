@@ -1,0 +1,20 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "python:{{ version }}-slim",
+    "final_steps": [
+        "FROM python:{{ version }}-slim",
+        "WORKDIR /app",
+        "COPY . /app",
+        "RUN pip install --no-cache-dir -r requirements.txt",
+        "EXPOSE 5000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/public",
+        "{{/if}}",
+        "ENV NAME World",
+        "CMD [\"python\", \"app.py\"]"
+    ],
+    "defaults": {
+        "version": "3.8",
+        "expose_ports": ["5000"]
+    }
+}

@@ -25,9 +25,12 @@ AppFizzle supports a wide range of backend and frontend technologies, ensuring y
 #### Java
 - Spring Boot
 - Play Framework
+- Quarkus
+- Micronaut
 
 #### Node
 - Node.js
+- AdonisJs
 
 #### PHP
 - Laravel
@@ -63,30 +66,23 @@ AppFizzle supports a wide range of backend and frontend technologies, ensuring y
 
 ### Frontends
 
-### React
-
-### Vue.js
-
-#### Svelte
-
-#### Angular
-
-#### Solid
-
-#### Preact
-
-#### Alpine.js
-
-#### Ember
+#### NodeJS
+- React
+- Vue.js
+- Svelte
+- Angular
+- Solid
+- Preact
+- Alpine.js
+- Ember
+- Backbone.js
+- Aurelia
+- Stimulus
+- LitElement
 
 #### WebAssembly
 - Blazor
 
-#### Backbone.js
-
-#### Aurelia
-
-#### Stimulus
 
 ## Future Roadmap 🛣️
 

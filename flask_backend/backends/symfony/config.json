@@ -1,0 +1,21 @@
+{
+    "requirements": ["final_steps"],
+    "base_image": "php:{{ version }}-fpm",
+    "final_steps": [
+        "FROM php:{{ version }}-fpm",
+        "WORKDIR /var/www",
+        "RUN apt-get update && apt-get install -y libzip-dev zip && docker-php-ext-install zip",
+        "RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
+        "COPY . /var/www",
+        "RUN chown -R www-data:www-data /var/www",
+        "EXPOSE 9000",
+        "{{#if frontend}}",
+        "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /var/www/public",
+        "{{/if}}",
+        "CMD [\"php-fpm\"]"
+    ],
+    "defaults": {
+        "version": "8.1",
+        "expose_ports": ["9000"]
+    }
+}
