@@ -1,0 +1,17 @@
+FROM node:latest AS angular-build
+WORKDIR /app
+COPY ["MyAngularApp/package.json", "MyAngularApp/package-lock.json*", "./"]
+RUN npm install
+COPY MyAngularApp/ .
+RUN npm run build
+
+FROM python:3.8-slim
+WORKDIR /app
+COPY . /app
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 5000
+
+COPY --from=angular-build /public/browser /app/public
+
+ENV NAME World
+CMD ["python", "app.py"]
