@@ -13,7 +13,7 @@
     "output_directory": "/app/dist/{{ lit_output_dir }}",
     "build_stage_name": "lit-build",
     "defaults": {
-        "lit_app_dir": "MyLitApp",
+        "lit_app_dir": "generics",
         "lit_output_dir": "MyLitApp",
         "version": "latest"
     }

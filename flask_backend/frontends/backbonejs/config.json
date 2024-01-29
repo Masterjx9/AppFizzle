@@ -13,7 +13,7 @@
     "output_directory": "/usr/src/app/dist/{{ backbonejs_output_dir }}",
     "build_stage_name": "backbonejs-build",
     "defaults": {
-        "backbonejs_app_dir": "MyBackboneJSApp",
+        "backbonejs_app_dir": "generics",
         "backbonejs_output_dir": "MyBackboneJSApp",
         "version": "latest"
     }

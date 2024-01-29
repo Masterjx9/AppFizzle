@@ -1,20 +1,15 @@
-{
-    "requirements": ["build_steps"],
-    "base_image": "node:latest",
+{   "requirements": ["build_steps"],
+    "base_image": "alpine:latest",
     "build_steps": [
-        "FROM node:{{ version }} AS aplinejs-build",
+        "FROM alpine:latest AS base",
         "WORKDIR /usr/src/app",
-        "COPY [\"{{ aplinejs_app_dir }}/package.json\", \"{{ aplinejs_app_dir }}/package-lock.json*\", \"./\"]",
-        "RUN npm install",
         "COPY {{ aplinejs_app_dir }}/ .",
-        "RUN npm run build",
         ""
     ],
-    "output_directory": "/usr/src/app/dist/{{ aplinejs_output_dir }}",
+    "output_directory": "/usr/src/app/generics",
     "build_stage_name": "aplinejs-build",
     "defaults": {
-        "aplinejs_app_dir": "MyApllineJsApp",
-        "aplinejs_output_dir": "MyApllineJsApp",
-        "version": "latest"
+        "aplinejs_app_dir": "generics",
+        "aplinejs_output_dir": "MyAlpineJsApp"
     }
 }

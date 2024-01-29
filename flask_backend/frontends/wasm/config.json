@@ -13,7 +13,7 @@
     "output_directory": "/app/{{ MyBlazorApp }}",
     "build_stage_name": "blazor-build",
     "defaults": {
-        "blazor_app_dir": "MyBlazorApp",
+        "blazor_app_dir": "generics",
         "blazor_output_dir": "MyBlazorApp",
         "version": "latest"
     }

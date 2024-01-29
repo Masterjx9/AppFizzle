@@ -13,7 +13,7 @@
     "output_directory": "/app/dist/{{ vuejs_output_dir }}",
     "build_stage_name": "vuejs-build",
     "defaults": {
-        "vuejs_app_dir": "MyVueApp",
+        "vuejs_app_dir": "generics",
         "vuejs_output_dir": "MyVueApp",
         "version": "latest"
     }
