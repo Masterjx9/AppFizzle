@@ -10,7 +10,6 @@
         "{{#if frontend}}",
         "COPY --from={{ frontend.build_stage_name }} {{ frontend.output_directory }} /app/public",
         "{{/if}}",
-        "ENV NAME World",
         "CMD [\"python\", \"app.py\"]"
     ],
     "defaults": {
