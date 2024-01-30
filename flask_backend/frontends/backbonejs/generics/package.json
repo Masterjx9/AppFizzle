@@ -1,0 +1,16 @@
+{
+    "name": "appfizzle",
+    "version": "1.0.0",
+    "description": "A basic Backbone.js application setup",
+    "scripts": {
+      "build": "echo 'Building the app...'"
+    },
+    "dependencies": {
+      "backbone": "^1.4.0",
+      "underscore": "^1.13.1",
+      "jquery": "^3.6.0"
+    },
+    "author": "",
+    "license": "ISC"
+  }
+  
