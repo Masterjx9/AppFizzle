@@ -1,0 +1,26 @@
+﻿@page "/"
+
+<style>
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+
+<h1>Welcome to AppFizzle!</h1>
+<p>This is a basic Web Assembly (With Blazor #C .NET) application.</p>
+<button id="clickMeBtn" @onclick="ShowAlert">Click Me</button>
+<br />
+<br />
+Welcome to your new app.
+
+@code {
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    private async Task ShowAlert()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", "Hello from AppFizzle!");
+    }
+}

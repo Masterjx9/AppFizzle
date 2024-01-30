@@ -10,7 +10,7 @@
         "RUN dotnet publish -c Release -o out/wwwroot",
         ""
     ],
-    "output_directory": "/app/{{ MyBlazorApp }}",
+    "output_directory": "/app/wwwroot/dist",
     "build_stage_name": "blazor-build",
     "defaults": {
         "blazor_app_dir": "generics",
