@@ -10,7 +10,7 @@
         "RUN npm run build",
         ""
     ],
-    "output_directory": "/app/build/{{ preact_output_dir }}",
+    "output_directory": "/app/build",
     "build_stage_name": "preact-build",
     "defaults": {
         "preact_app_dir": "generics",
