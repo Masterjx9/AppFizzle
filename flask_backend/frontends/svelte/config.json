@@ -10,7 +10,7 @@
         "RUN npm run build",
         ""
     ],
-    "output_directory": "/app/public/{{ svelte_output_dir }}",
+    "output_directory": "/app/build",
     "build_stage_name": "svelte-build",
     "defaults": {
         "svelte_app_dir": "generics",
