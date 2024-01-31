@@ -10,7 +10,7 @@
         "RUN npm run build",
         ""
     ],
-    "output_directory": "/public/browser",
+    "output_directory": "/app/dist/my-angular-app/browser",
     "build_stage_name": "angular-build",
     "defaults": {
         "angular_app_dir": "generics",

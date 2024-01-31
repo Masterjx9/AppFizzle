@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppFizzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.x.x/dist/alpine.js"></script>
+
+</head>
+<body>
+    <h1 x-data="{ message: 'Welcome to AppFizzle!' }" x-text="message"></h1>
+    <p>This is a basic application with Alpine.js.</p>
+    <div x-data="{ showMessage: false }">
+        <button x-on:click="showMessage = !showMessage">Toggle Message</button>
+        <p x-show="showMessage">Hello from AppFizzle!</p>
+    </div>
+    <div x-data="{ showAlert() { alert('Hello from AppFizzle!'); } }">
+        <button x-on:click="showAlert()">Click Me</button>
+    </div>

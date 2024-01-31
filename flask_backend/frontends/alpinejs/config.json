@@ -1,0 +1,15 @@
+{   "requirements": ["build_steps"],
+    "base_image": "alpine:latest",
+    "build_steps": [
+        "FROM alpine:latest AS alpinejs-build",
+        "WORKDIR /usr/src/app",
+        "COPY {{ alpinejs_app_dir }}/ .",
+        ""
+    ],
+    "output_directory": "/usr/src/app",
+    "build_stage_name": "alpinejs-build",
+    "defaults": {
+        "alpinejs_app_dir": "generics",
+        "alpinejs_output_dir": "MyAlpineJsApp"
+    }
+}

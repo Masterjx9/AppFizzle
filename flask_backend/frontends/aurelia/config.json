@@ -10,7 +10,7 @@
         "RUN npm run build",
         ""
     ],
-    "output_directory": "/usr/src/app/dist/{{ aurelia_app_dir }}",
+    "output_directory": "/usr/src/app/dist",
     "build_stage_name": "aurelia-build",
     "defaults": {
         "aurelia_app_dir": "generics",

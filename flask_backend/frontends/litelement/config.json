@@ -7,10 +7,9 @@
         "COPY [\"{{ lit_app_dir }}/package.json\", \"{{ lit_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ lit_app_dir }}/ .",
-        "RUN npm run build",
         ""
     ],
-    "output_directory": "/app/dist/{{ lit_app_dir }}",
+    "output_directory": "/app/dist",
     "build_stage_name": "lit-build",
     "defaults": {
         "lit_app_dir": "generics",
