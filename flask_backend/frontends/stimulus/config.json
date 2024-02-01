@@ -9,7 +9,7 @@
         "COPY {{ stimulus_app_dir }}/ .",
         ""
     ],
-    "output_directory": "/usr/src/app/dist",
+    "output_directory": "/usr/src/app",
     "build_stage_name": "stimulus-build",
     "defaults": {
         "stimulus_app_dir": "generics",

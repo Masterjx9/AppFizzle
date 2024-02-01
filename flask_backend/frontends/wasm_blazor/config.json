@@ -7,14 +7,13 @@
         "COPY [\"{{ blazor_app_dir }}/*.csproj\", \"./\"]",
         "RUN dotnet restore",
         "COPY {{ blazor_app_dir }}/ .",
-        "RUN dotnet publish -c Release -o out/wwwroot",
-        ""
+        "RUN dotnet publish -c Release -o out",
+        "COPY {{ blazor_app_dir }}/wwwroot /app/out/wwwroot"
     ],
-    "output_directory": "/app/wwwroot/dist",
+    "output_directory": "/app/out/wwwroot",
     "build_stage_name": "blazor-build",
     "defaults": {
         "blazor_app_dir": "generics",
-        "blazor_output_dir": "MyBlazorApp",
         "version": "latest"
     }
 }

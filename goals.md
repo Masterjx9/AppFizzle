@@ -8,3 +8,9 @@ Test all frontends
 - litelement - completed
 
 - preact - completed
+- react - completed
+- solid - in progress
+- stimulus - in progress
+- svelte - completed
+- vue - completed
+- wasm blazor - in progress
