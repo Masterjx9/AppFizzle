@@ -10,7 +10,7 @@
         "RUN npm run build",
         ""
     ],
-    "output_directory": "/app/.output/public",
+    "output_directory": "/app/dist",
     "build_stage_name": "solid-build",
     "defaults": {
         "solid_app_dir": "generics",

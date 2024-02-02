@@ -7,6 +7,7 @@
         "COPY [\"{{ stimulus_app_dir }}/package.json\", \"{{ stimulus_app_dir }}/package-lock.json*\", \"./\"]",
         "RUN npm install",
         "COPY {{ stimulus_app_dir }}/ .",
+        "RUN npm run build",
         ""
     ],
     "output_directory": "/usr/src/app",

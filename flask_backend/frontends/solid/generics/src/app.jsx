@@ -1,6 +1,7 @@
 // @refresh reload
 import { createSignal } from "solid-js";
 import "./app.css";
+import { render } from "solid-js/web";
 export default function App() {
   const [count, setCount] = createSignal(0);
   return (
@@ -20,3 +21,4 @@ export default function App() {
     </main>
   );
 }
+render(App, document.getElementById("app"));

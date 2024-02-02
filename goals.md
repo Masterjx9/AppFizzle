@@ -6,11 +6,11 @@ Test all frontends
 - backbone - completed
 - ember - completed
 - litelement - completed
-
 - preact - completed
 - react - completed
-- solid - in progress
-- stimulus - in progress
+- stimulus - completed
 - svelte - completed
 - vue - completed
-- wasm blazor - in progress
+- wasm blazor - completed
+
+- solid - in progress
