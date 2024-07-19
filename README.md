@@ -2,6 +2,9 @@
 
 Welcome to AppFizzle, where building web applications becomes a breeze! 🎉 AppFizzle is the ultimate tool for developers looking to create robust, scalable, and modern web applications with ease.
 
+<!-- Use webui.png for example image in markdown -->
+![AppFizzle](webui.png)
+
 🔧 **Currently built in Python, with a future roadmap towards Rust!**
 
 ## Supported Technologies
@@ -83,7 +86,35 @@ AppFizzle supports a wide range of backend and frontend technologies, ensuring y
 #### WebAssembly
 - Blazor
 
+## Installation instructions
+- Clone the repository
+- cd into the flask_backend folder and run the following to create a virtual environment
 
+Windows
+```bash
+python3 -m venv venv
+```
+MacOS/Linux
+```bash
+py -m venv venv
+```
+Then activate the virtual environment
+Windows
+```bash
+venv\Scripts\activate
+```
+MacOS/Linux
+```bash
+source venv/bin/activate
+```
+Then install the dependencies
+```bash
+pip install -r requirements.txt
+```
+- run the app
+```bash
+python app.py
+```
 ## Future Roadmap 🛣️
 
 AppFizzle isn't just stopping here. We're constantly evolving, and here's what's on the horizon:

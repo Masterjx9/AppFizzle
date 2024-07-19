@@ -1,9 +1,13 @@
-from flask import Flask, request, send_file, g
+from flask import Flask, request, send_file, g, render_template
 import common
 import uuid
 import os
 import shutil
 app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/builder_dockerfile', methods=['POST'])
 def builder():
@@ -15,7 +19,7 @@ def builder():
         else:
             processed_dockerfile = common.dockerfile_flow(data["backend"])
         return {"result": "success", "dockerfile": processed_dockerfile}
-    
+
 @app.route('/builder_dockerpackage', methods=['POST'])
 def builder_dockerpackage():
     if request.method == 'POST':
@@ -36,7 +40,6 @@ def builder_dockerpackage():
         else:
             return {"error": "Packaged Dockerfile not found."}, 404
 
-    
 @app.after_request
 def cleanup(response):
     unique_id = getattr(g, 'unique_id', None)
@@ -46,7 +49,6 @@ def cleanup(response):
             print("Removing directory:", temp_dir)
             shutil.rmtree(temp_dir)  # Delete the entire directory tree
             g.unique_id = None # Reset the flag
-
     return response
 
 if __name__ == '__main__':
