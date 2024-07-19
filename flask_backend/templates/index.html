@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appfizzle</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5a623, #f76b1c);
+            color: white;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            background: #ffffff;
+            color: #333333;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .card-header {
+            background: #ff6b6b;
+            color: white;
+            font-size: 1.5rem;
+            text-align: center;
+            border-bottom: none;
+            border-radius: 10px 10px 0 0;
+        }
+        .btn-custom {
+            background-color: #1dd1a1;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #10ac84;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            Welcome to Appfizzle
+        </div>
+        <div class="card-body">
+            <form id="appfizzleForm">
+                <div class="form-group">
+                    <label for="frontendSelect">Select Frontend</label>
+                    <select class="form-control" id="frontendSelect" name="frontend">
+                        <option>alpinejs</option>
+                        <option>angular</option>
+                        <option>aurelia</option>
+                        <option>backbonejs</option>
+                        <option>ember</option>
+                        <option>litelement</option>
+                        <option>mod.rs</option>
+                        <option>preact</option>
+                        <option>react</option>
+                        <option>solid</option>
+                        <option>stimulus</option>
+                        <option>svelte</option>
+                        <option>vuejs</option>
+                        <option>wasm_blazor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="backendSelect">Select Backend</label>
+                    <select class="form-control" id="backendSelect" name="backend">
+                        <option>adonis</option>
+                        <option>akka-http</option>
+                        <option>asp_net_core</option>
+                        <option>blazor</option>
+                        <option>codeigniter</option>
+                        <option>coldfusion</option>
+                        <option>cowboy</option>
+                        <option>dancer</option>
+                        <option>django</option>
+                        <option>flask</option>
+                        <option>go</option>
+                        <option>ktor</option>
+                        <option>laravel</option>
+                        <option>meteorjs</option>
+                        <option>micronaut</option>
+                        <option>mod.rs</option>
+                        <option>nodejs</option>
+                        <option>phoenix</option>
+                        <option>play-framework</option>
+                        <option>quarkus</option>
+                        <option>ruby-on-rails</option>
+                        <option>shiny</option>
+                        <option>sinatra</option>
+                        <option>spring-boot</option>
+                        <option>symfony</option>
+                        <option>yesod</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-custom btn-block">Create Dockerfile</button>
+            </form>
+            <a id="downloadLink" style="display: none;"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('appfizzleForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const frontend = document.getElementById('frontendSelect').value;
+        const backend = document.getElementById('backendSelect').value;
+        
+        fetch('/builder_dockerpackage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ frontend, backend }),
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.blob();
+            } else {
+                throw new Error('Failed to download file');
+            }
+        })
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.getElementById('downloadLink');
+            a.href = url;
+            a.download = 'dockerfile_package.zip';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
