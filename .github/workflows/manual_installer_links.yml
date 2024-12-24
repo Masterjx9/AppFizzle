@@ -10,6 +10,8 @@ on:
 jobs:
   update-manual-install:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
