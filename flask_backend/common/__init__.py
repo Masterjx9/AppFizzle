@@ -41,9 +41,10 @@ def copy_generics(unique_id, framework_name, framework_generics_path, backend_ta
     return temp_dir
 
 def package_dockerfile(unique_id, data, dockerfile):
+    print(data)
     if "frontend" in data:
         temp_dir = copy_generics(unique_id, data["frontend"], "frontends", data["backend"])
-    else:
+    if "backend" in data:
         temp_dir = copy_generics(unique_id, data["backend"], "backends", data["backend"])
     
     # Write dockerfile to temporary directory
