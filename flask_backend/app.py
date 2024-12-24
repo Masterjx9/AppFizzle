@@ -1,9 +1,11 @@
 from flask import Flask, request, send_file, g, render_template
+from flask_cors import CORS
 import common
 import uuid
 import os
 import shutil
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def index():
@@ -52,4 +54,4 @@ def cleanup(response):
     return response
 
 if __name__ == '__main__':
-    app.run(debug=True)    
+    app.run(debug=True, host='0.0.0.0', port=5000)

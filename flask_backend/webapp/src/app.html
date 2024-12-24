@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Appfizzle</title>
+		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			body {
+				background: linear-gradient(135deg, #f5a623, #f76b1c);
+				color: white;
+			}
+			.container {
+				margin-top: 50px;
+			}
+			.card {
+				background: #ffffff;
+				color: #333333;
+				border: none;
+				border-radius: 10px;
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+			}
+			.card-header {
+				background: #ff6b6b;
+				color: white;
+				font-size: 1.5rem;
+				text-align: center;
+				border-bottom: none;
+				border-radius: 10px 10px 0 0;
+			}
+			.btn-custom {
+				background-color: #1dd1a1;
+				color: white;
+			}
+			.btn-custom:hover {
+				background-color: #10ac84;
+			}
+
+			
+		</style>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</body>
+</html>
