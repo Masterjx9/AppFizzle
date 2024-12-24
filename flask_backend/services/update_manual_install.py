@@ -1,7 +1,8 @@
 import requests
 import json
 import os
-from common import get_config
+from flask_backend.common import get_config
+
 
 def get_latest_installer_link(framework):
     """Fetch the latest installer or installation command for a given framework."""
