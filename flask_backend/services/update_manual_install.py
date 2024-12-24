@@ -110,3 +110,4 @@ def get_latest_node_version():
         return versions[0]["version"].lstrip("v")  # Return the latest version
     else:
         raise Exception("Failed to fetch Node.js versions.")
+update_config_with_installers()    
