@@ -27,7 +27,7 @@ jobs:
       
       - name: Run update script
         run: |
-          python -m services.update_manual_install
+          python -m flask_backend/services.update_manual_install
       
       - name: Commit changes
         run: |
