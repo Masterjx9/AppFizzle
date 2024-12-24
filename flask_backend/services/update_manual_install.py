@@ -78,11 +78,10 @@ def update_config_with_installers():
             print(f"Installer link for {folder_name}: {installer_link}")
 
             # Get the current config.json content
-            config_content = get_config(folder_name, "backends")
+            config_content = get_config(folder_name, "flask_backend/backends")
             if config_content is None:
                 print(f"No config.json found for {folder_name} in 'backends'. Skipping.")
                 continue
-
             # Parse the config and update with the installer link
             config = json.loads(config_content)
             if "defaults" not in config:
@@ -90,7 +89,7 @@ def update_config_with_installers():
             config["defaults"]["manual_installer"] = installer_link
 
             # Write the updated config.json back to the respective folder
-            directory_path = os.path.join(os.getcwd(), "backends", folder_name)
+            directory_path = os.path.join(os.getcwd(), "flask_backend/backends", folder_name)
             config_path = os.path.join(directory_path, "config.json")
             with open(config_path, "w") as file:
                 json.dump(config, file, indent=4)
