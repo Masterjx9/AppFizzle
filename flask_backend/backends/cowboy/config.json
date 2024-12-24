@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "erlang:{{ version }}",
     "final_steps": [
         "FROM erlang:{{ version }}",
@@ -14,6 +16,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://www.erlang.org/downloads"
     }
 }

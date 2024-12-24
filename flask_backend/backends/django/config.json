@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "python:{{ version }}",
     "final_steps": [
         "FROM python:{{ version }}",
@@ -17,6 +19,9 @@
     ],
     "defaults": {
         "version": "3.8",
-        "expose_ports": ["8000"]
+        "expose_ports": [
+            "8000"
+        ],
+        "manual_installer": "https://files.pythonhosted.org/packages/58/0b/8a4ab2c02982df4ed41e29f28f189459a7eba37899438e6bea7f39db793b/Django-5.1.4-py3-none-any.whl"
     }
 }

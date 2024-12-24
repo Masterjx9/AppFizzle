@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "node:{{ version }}",
     "final_steps": [
         "FROM node:{{ version }}",
@@ -15,6 +17,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["3333"]
+        "expose_ports": [
+            "3333"
+        ],
+        "manual_installer": "https://nodejs.org/dist/latest/node-v23.5.0-linux-x64.tar.xz"
     }
 }

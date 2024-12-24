@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "perl:{{ version }}",
     "final_steps": [
         "FROM perl:{{ version }}",
@@ -15,6 +17,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["3000"]
+        "expose_ports": [
+            "3000"
+        ],
+        "manual_installer": "https://www.perl.org/get.html"
     }
 }

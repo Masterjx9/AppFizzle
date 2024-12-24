@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "php:{{ version }}-fpm",
     "final_steps": [
         "FROM php:{{ version }}-fpm",
@@ -19,6 +21,9 @@
     ],
     "defaults": {
         "version": "8.1",
-        "expose_ports": ["9000"]
+        "expose_ports": [
+            "9000"
+        ],
+        "manual_installer": "https://www.php.net/downloads.php"
     }
 }

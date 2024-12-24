@@ -1,5 +1,7 @@
 {
-    "requirements" : ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "php:{{ version }}",
     "final_steps": [
         "FROM php:{{ version }}",
@@ -14,6 +16,9 @@
     ],
     "defaults": {
         "version": "7.4-apache",
-        "expose_ports": ["80"]
+        "expose_ports": [
+            "80"
+        ],
+        "manual_installer": "https://www.php.net/downloads.php"
     }
 }

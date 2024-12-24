@@ -1,5 +1,8 @@
 {
-    "requirements": ["build_steps", "final_steps"],
+    "requirements": [
+        "build_steps",
+        "final_steps"
+    ],
     "base_image": "haskell:{{ version }}",
     "build_steps": [
         "FROM haskell:{{ version }} as builder",
@@ -23,6 +26,9 @@
     "defaults": {
         "version": "8.10",
         "haskell_version": "8.10",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://www.haskell.org/platform/"
     }
 }

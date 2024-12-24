@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "openjdk:{{ version }}",
     "final_steps": [
         "FROM openjdk:{{ version }}",
@@ -13,6 +15,9 @@
     ],
     "defaults": {
         "version": "11",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://jdk.java.net/"
     }
 }

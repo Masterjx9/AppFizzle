@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "python:{{ version }}-slim",
     "final_steps": [
         "FROM python:{{ version }}-slim",
@@ -17,6 +19,9 @@
     ],
     "defaults": {
         "version": "3.8",
-        "expose_ports": ["5000"]
+        "expose_ports": [
+            "5000"
+        ],
+        "manual_installer": "https://files.pythonhosted.org/packages/af/47/93213ee66ef8fae3b93b3e29206f6b251e65c97bd91d8e1c5596ef15af0a/flask-3.1.0-py3-none-any.whl"
     }
 }

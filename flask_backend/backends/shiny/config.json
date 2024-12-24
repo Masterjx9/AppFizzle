@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "rocker/shiny:{{ version }}",
     "final_steps": [
         "FROM rocker/shiny:{{ version }}",
@@ -13,6 +15,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["3838"]
+        "expose_ports": [
+            "3838"
+        ],
+        "manual_installer": "https://cran.r-project.org/web/packages/shiny/index.html"
     }
 }

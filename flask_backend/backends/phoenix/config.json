@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "elixir:{{ version }}",
     "final_steps": [
         "FROM elixir:{{ version }}",
@@ -27,6 +29,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["4000"]
+        "expose_ports": [
+            "4000"
+        ],
+        "manual_installer": "https://elixir-lang.org/install.html"
     }
 }

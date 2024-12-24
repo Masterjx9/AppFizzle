@@ -1,5 +1,8 @@
 {
-    "requirements": ["build_steps", "final_steps"],
+    "requirements": [
+        "build_steps",
+        "final_steps"
+    ],
     "base_image": "gradle:{{ version }}-jdk11",
     "build_steps": [
         "FROM gradle:{{ version }}-jdk11 AS build",
@@ -19,6 +22,9 @@
     ],
     "defaults": {
         "version": "latest",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://jdk.java.net/"
     }
 }

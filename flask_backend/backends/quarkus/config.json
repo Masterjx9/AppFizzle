@@ -1,5 +1,8 @@
 {
-    "requirements": ["build_steps", "final_steps"],
+    "requirements": [
+        "build_steps",
+        "final_steps"
+    ],
     "base_image": "maven:{{ version }}-openjdk-11",
     "build_steps": [
         "FROM maven:{{ version }}-openjdk-11 AS build",
@@ -19,6 +22,9 @@
     ],
     "defaults": {
         "version": "3.6.3",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://jdk.java.net/"
     }
 }

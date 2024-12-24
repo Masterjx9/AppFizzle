@@ -1,5 +1,7 @@
 {
-    "requirements": ["final_steps"],
+    "requirements": [
+        "final_steps"
+    ],
     "base_image": "openjdk:{{ version }}-jre-alpine",
     "final_steps": [
         "FROM openjdk:{{ version }}-jre-alpine",
@@ -16,6 +18,9 @@
     ],
     "defaults": {
         "version": "8",
-        "expose_ports": ["9000"]
+        "expose_ports": [
+            "9000"
+        ],
+        "manual_installer": "https://jdk.java.net/"
     }
 }

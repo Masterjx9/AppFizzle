@@ -1,5 +1,8 @@
 {
-    "requirements": ["build_steps", "final_steps"],
+    "requirements": [
+        "build_steps",
+        "final_steps"
+    ],
     "base_image": "hseeberger/scala-sbt:{{ version }}",
     "build_steps": [
         "FROM hseeberger/scala-sbt:{{ version }} as build",
@@ -24,6 +27,9 @@
     "defaults": {
         "version": "latest",
         "app_name": "MyScalaApp",
-        "expose_ports": ["8080"]
+        "expose_ports": [
+            "8080"
+        ],
+        "manual_installer": "https://jdk.java.net/"
     }
 }

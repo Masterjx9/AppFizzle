@@ -1,5 +1,8 @@
 {
-    "requirements" : ["build_steps", "final_steps"],
+    "requirements": [
+        "build_steps",
+        "final_steps"
+    ],
     "base_image": "mcr.microsoft.com/dotnet/sdk:{{ version }}",
     "build_steps": [
         "FROM mcr.microsoft.com/dotnet/sdk:{{ version }} AS blazor-build",
@@ -20,6 +23,7 @@
     ],
     "defaults": {
         "version": "5.0",
-        "project_executable": "MyBlazorApp.dll"
+        "project_executable": "MyBlazorApp.dll",
+        "manual_installer": "https://dotnet.microsoft.com/en-us/download/dotnet"
     }
 }
