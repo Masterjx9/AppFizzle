@@ -22,6 +22,6 @@
         "expose_ports": [
             "8000"
         ],
-        "manual_installer": "https://files.pythonhosted.org/packages/90/92/7448697b5838b3a1c6e1d2d6a673e908d0398e84dc4f803a2ce11e7ffc0f/django-5.2.1-py3-none-any.whl"
+        "manual_installer": "https://files.pythonhosted.org/packages/b4/5c/5d00acab6c062b154e5a0f092938ae5a0c698dbc4362b68e23200960f32c/django-5.2.2-py3-none-any.whl"
     }
 }
