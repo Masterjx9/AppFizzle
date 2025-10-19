@@ -20,6 +20,6 @@
         "expose_ports": [
             "3333"
         ],
-        "manual_installer": "https://nodejs.org/dist/latest/node-v24.10.0-linux-x64.tar.xz"
+        "manual_installer": "https://nodejs.org/dist/latest/node-v25.0.0-linux-x64.tar.xz"
     }
 }
